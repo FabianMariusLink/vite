@@ -81,8 +81,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: push-to-docker-hub
     environment:
-      name: Pokemon TCG Sim
-      url: https://pokemon-tcg-sim.onrender.com/
+      name: vite
+      url: https://vite-isos.onrender.com
     steps:
       - name: Trigger Render.com Deployment
         run: |
