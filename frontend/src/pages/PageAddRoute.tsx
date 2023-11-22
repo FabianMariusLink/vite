@@ -8,9 +8,19 @@ import {
     Pin,
     InfoWindow,
 } from "@vis.gl/react-google-maps";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 type NewRoute = {
+    name: string,
+    lat: number,
+    lng: number,
+    date: string,
+    author: string,
+    description: string
+}
+
+type SavedRoute = {
+    id: string,
     name: string,
     lat: number,
     lng: number,
@@ -32,24 +42,35 @@ export default function PageAddRoute() {
         setIsChecked(!isChecked);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const [savedRoute, setSavedRoute] = useState<SavedRoute>("");
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        axios.post("/api/routes", {
-            name: valueTitle,
-            lat: 47.99342361334973,
-            lng: 7.857156473011635,
-            date: "2023-11-21",
-            author: valueAuthor,
-            description: valueDescription
-        } as NewRoute)
-            .then();
+        try {
+            const response = await axios.post('/api/routes', {
+                name: valueTitle,
+                lat: 47.99342361334973,
+                lng: 7.857156473011635,
+                date: '2023-11-21',
+                author: valueAuthor,
+                description: valueDescription,
+            } as NewRoute);
+
+            setSavedRoute(response.data);
+
+            if (savedRoute && savedRoute.id) {
+                alert(savedRoute.id);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     return (
         <>
             <Header/>
             <body>
-            <APIProvider apiKey={""}>
+            <APIProvider apiKey={"AIzaSyA5xIo7wxEerCg84aXnQIoxAGJEItgQ6dI"}>
                 <div className={"map"}>
                     <Map zoom={15} center={position} mapId={"8a28e823bfef5b48"}>
                         <AdvancedMarker position={position} onClick={() => setOpen(true)}>
