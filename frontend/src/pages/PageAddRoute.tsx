@@ -1,6 +1,6 @@
 import Header from "../components/Header.tsx";
 import '../css/Global.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     APIProvider,
     Map,
@@ -8,7 +8,7 @@ import {
     Pin,
     InfoWindow,
 } from "@vis.gl/react-google-maps";
-import axios, {AxiosError} from "axios";
+import axios from "axios";
 
 type NewRoute = {
     name: string,
@@ -31,33 +31,30 @@ type SavedRoute = {
 
 export default function PageAddRoute() {
 
-    const position = {lat: 47.99342361334973, lng: 7.857156473011635};
+    const [userLocation, setUserLocation] = useState({lat: 0, lng: 0});
+    const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [valueTitle, setValueTitle] = useState('');
     const [valueAuthor, setValueAuthor] = useState('');
     const [valueDescription, setValueDescription] = useState('');
-
-    const [isChecked, setIsChecked] = useState<boolean>(false);
-    const handleToggle = () => {
-        setIsChecked(!isChecked);
-    };
-
-    const [savedRoute, setSavedRoute] = useState<SavedRoute>("");
+    const [currentDate, setCurrentDate] = useState<string>('');
+    const [savedRoute, setSavedRoute] = useState<SavedRoute>();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const today = new Date();
+        const formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+        setCurrentDate(formattedDate);
         try {
             const response = await axios.post('/api/routes', {
                 name: valueTitle,
-                lat: 47.99342361334973,
-                lng: 7.857156473011635,
-                date: '2023-11-21',
+                lat: userLocation.lat,
+                lng: userLocation.lng,
+                date: currentDate,
                 author: valueAuthor,
                 description: valueDescription,
             } as NewRoute);
-
             setSavedRoute(response.data);
-
             if (savedRoute && savedRoute.id) {
                 alert(savedRoute.id);
             }
@@ -66,60 +63,86 @@ export default function PageAddRoute() {
         }
     };
 
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const {latitude, longitude} = position.coords;
+                    setUserLocation({lat: latitude, lng: longitude});
+                    setLoading(false);
+                },
+                (error) => {
+                    console.error('Error getting location:', error);
+                    setLoading(false);
+                }
+            );
+        }
+    }, []);
+
     return (
         <>
             <Header/>
             <body>
-            <APIProvider apiKey={"AIzaSyA5xIo7wxEerCg84aXnQIoxAGJEItgQ6dI"}>
-                <div className={"map"}>
-                    <Map zoom={15} center={position} mapId={"8a28e823bfef5b48"}>
-                        <AdvancedMarker position={position} onClick={() => setOpen(true)}>
-                            <Pin background={"red"} borderColor={"red"} glyphColor={"red"}/>
-                        </AdvancedMarker>
-                        {open && (
-                            <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-                                <p>I am in Hamburg</p>
-                            </InfoWindow>
+            <div className={"content-container"}>
+                <APIProvider apiKey={""}>
+                    <div className={"map"}>
+                        {loading ? (
+                            <p id="loading-container">Loading ...</p>
+                        ) : (
+                            <Map zoom={19}
+                                 center={userLocation}
+                                 mapId={"8a28e823bfef5b48"}
+                            >
+                                <AdvancedMarker
+                                    position={userLocation}
+                                    onClick={() => setOpen(true)}
+                                >
+                                    <Pin
+                                        background={"#98c5ed"}
+                                        borderColor={"white"}
+                                        glyphColor={"white"}/>
+                                </AdvancedMarker>
+                                {open && (
+                                    <InfoWindow
+                                        position={userLocation}
+                                        onCloseClick={() => setOpen(false)}>
+                                        <p>I am here :-)</p>
+                                    </InfoWindow>
+                                )}
+                            </Map>
                         )}
-                    </Map>
-                </div>
-            </APIProvider>
-            <form onSubmit={handleSubmit}>
-                <label>Streckentitel:
-                    <br/>
-                    <input
-                        type="text"
-                        value={valueTitle}
-                        onChange={event => {
-                            setValueTitle(event.target.value)
-                        }}
-                    />
-                </label>
-                <label>Author:
-                    <br/>
-                    <input
-                        type="text"
-                        value={valueAuthor}
-                        onChange={event => setValueAuthor(event.target.value)}
-                    />
-                </label>
-                <div>
-                    <label className="toggle-switch">
-                        Standort verwenden:
-                        <input type="checkbox" checked={isChecked} onChange={handleToggle}/>
-                        <span className="slider"></span>
+                    </div>
+                </APIProvider>
+                <form onSubmit={handleSubmit}>
+                    <label>Streckentitel:
+                        <br/>
+                        <input
+                            type="text"
+                            value={valueTitle}
+                            onChange={event => {
+                                setValueTitle(event.target.value)
+                            }}
+                        />
                     </label>
-                </div>
-                <label>
-                    Beschreibung:
-                    <br/>
-                    <textarea
-                        value={valueDescription}
-                        onChange={event => setValueDescription(event.target.value)}
-                    />
-                </label>
-                <button>Speichern</button>
-            </form>
+                    <label>Author:
+                        <br/>
+                        <input
+                            type="text"
+                            value={valueAuthor}
+                            onChange={event => setValueAuthor(event.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Beschreibung:
+                        <br/>
+                        <textarea
+                            value={valueDescription}
+                            onChange={event => setValueDescription(event.target.value)}
+                        />
+                    </label>
+                    <button>Speichern</button>
+                </form>
+            </div>
             </body>
         </>
     );
