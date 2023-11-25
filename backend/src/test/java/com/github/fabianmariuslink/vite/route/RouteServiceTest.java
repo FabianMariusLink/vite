@@ -16,8 +16,7 @@ class RouteServiceTest {
     @Test
     void addRoute_saveAndReturnRoute() {
         // GIVEN
-        Route route = Route.builder()
-                .id(null)
+        RouteDTO routeDetails = RouteDTO.builder()
                 .name("SampleNameRoute")
                 .lat(47.99288610012664)
                 .lng(8.56433932879702)
@@ -37,7 +36,7 @@ class RouteServiceTest {
                 .build();
         // WHEN
         when(routeRepository.save(any(Route.class))).thenReturn(expected);
-        Route actual = routeService.addRoute(route);
+        Route actual = routeService.addRoute(routeDetails);
         // THEN
         verify(routeRepository).save(any(Route.class));
         assertEquals(expected, actual);

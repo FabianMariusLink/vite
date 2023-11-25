@@ -11,7 +11,7 @@ public class RouteController {
     private final RouteService routeService;
 
     @PostMapping
-    public Route addRoute(@RequestBody Route route) {
-        return routeService.addRoute(route);
+    public Route addRoute(@RequestBody RouteDTO routeDetails) {
+        return routeService.addRoute(routeDetails);
     }
 }

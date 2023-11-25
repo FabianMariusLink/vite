@@ -21,26 +21,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
 class RouteControllerTest {
 
-    private final static String BASE_URI = "/api/routes";
-
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
+    private final static String BASE_URI = "/api/routes";
+
     @Test
     @DirtiesContext
     void addRoute_expectStatus200AndReturnRoute() throws Exception {
         // GIVEN
-        Route route = new Route(
-                null,
+        RouteDTO routeDetails = new RouteDTO(
                 "SampleNameRoute",
                 47.99288610012664,
                 8.56433932879702,
                 LocalDate.parse("2023-11-21"),
                 "Fabian",
                 "A short text for example.");
-        String routeAsJson = objectMapper.writeValueAsString(route);
+        String routeAsJson = objectMapper.writeValueAsString(routeDetails);
         // WHEN
         MvcResult result = mockMvc.perform(post(BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)

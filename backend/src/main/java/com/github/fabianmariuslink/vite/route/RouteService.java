@@ -9,7 +9,15 @@ public class RouteService {
 
     private final RouteRepository routeRepository;
 
-    public Route addRoute(Route route) {
-        return routeRepository.save(route);
+    public Route addRoute(RouteDTO routeDetails) {
+        return routeRepository.save(Route.builder()
+                .id(null)
+                .name(routeDetails.name())
+                .lat(routeDetails.lat())
+                .lng(routeDetails.lng())
+                .date(routeDetails.date())
+                .author(routeDetails.author())
+                .description(routeDetails.description())
+                .build());
     }
 }
