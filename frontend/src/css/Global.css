@@ -1,24 +1,54 @@
-.map {
-    height: 50vh;
-    width: 100%
+* {
+    font-family: Arial, sans-serif;
+    font-size: 1em;
 }
 
-form {
-    margin-top: 1em;
+.content-container {
+    padding-top: 0.4em;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-label {
-    display: block;
+.content-container form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.content-container label {
+    margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
 
-input {
-    width: 93%;
-    padding: 8px;
-    margin-bottom: 15px;
+.content-container input,
+.content-container textarea {
+    width: 100%;
+    padding: 0.5em;
+    box-sizing: border-box;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
-textarea {
+.content-container button {
     width: 100%;
-    height: 5em;
+    padding: 1em;
+    background-color: #98c5ed;
+    color: white;
+    border: none;
+    border-radius: 0.3em;
+    cursor: pointer;
+}
+
+.map-container {
+    height: 50vh;
+    width: 100%;
+    margin-bottom: 1.1em;
+}
+
+#loading-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
 }
