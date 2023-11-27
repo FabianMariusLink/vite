@@ -11,7 +11,6 @@ public class RouteService {
 
     public Route addRoute(RouteDTO routeDetails) {
         return routeRepository.save(Route.builder()
-                .id(null)
                 .name(routeDetails.name())
                 .lat(routeDetails.lat())
                 .lng(routeDetails.lng())

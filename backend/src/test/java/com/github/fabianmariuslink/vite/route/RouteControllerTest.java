@@ -51,11 +51,11 @@ class RouteControllerTest {
         // THEN
         Route savedRoute = objectMapper.readValue(result.getResponse().getContentAsString(), Route.class);
         assertNotNull(savedRoute.id());
-        assertNotNull(savedRoute.name());
-        assertNotEquals(0.0, savedRoute.lat());
-        assertNotEquals(0.0, savedRoute.lng());
-        assertNotNull(savedRoute.date());
-        assertNotNull(savedRoute.author());
-        assertNotNull(savedRoute.description());
+        assertEquals(savedRoute.name(), routeDTO.name());
+        assertEquals(savedRoute.lat(), routeDTO.lat());
+        assertEquals(savedRoute.lng(), routeDTO.lng());
+        assertEquals(savedRoute.date(), routeDTO.date());
+        assertEquals(savedRoute.author(), routeDTO.author());
+        assertEquals(savedRoute.description(), routeDTO.description());
     }
 }

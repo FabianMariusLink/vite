@@ -1,5 +1,5 @@
 import Header from "../components/Header.tsx";
-import '../css/Global.css';
+import '../index.css';
 import React, {useEffect, useState} from "react";
 import {
     APIProvider,
@@ -85,7 +85,7 @@ export default function PageAddRoute() {
         <>
             <Header/>
             <div className={"content-container"}>
-                <APIProvider apiKey={""}>
+                <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
                     <div className={"map-container"}>
                         {loading ? (
                             <h2 id="loading-text">Map is loading ...</h2>
