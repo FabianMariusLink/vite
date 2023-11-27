@@ -32,14 +32,15 @@ class RouteControllerTest {
     @DirtiesContext
     void addRoute_expectStatus200AndReturnRoute() throws Exception {
         // GIVEN
-        RouteDTO routeDetails = new RouteDTO(
-                "SampleNameRoute",
-                47.99288610012664,
-                8.56433932879702,
-                LocalDate.parse("2023-11-21"),
-                "Fabian",
-                "A short text for example.");
-        String routeAsJson = objectMapper.writeValueAsString(routeDetails);
+        RouteDTO routeDTO = RouteDTO.builder()
+                .name("SampleNameRoute")
+                .lat(47.99288610012664)
+                .lng(8.56433932879702)
+                .date(LocalDate.parse("2023-11-20"))
+                .author("Fabian")
+                .description("A short text for example.")
+                .build();
+        String routeAsJson = objectMapper.writeValueAsString(routeDTO);
         // WHEN
         MvcResult result = mockMvc.perform(post(BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -47,7 +48,7 @@ class RouteControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andReturn();
-        //THEN
+        // THEN
         Route savedRoute = objectMapper.readValue(result.getResponse().getContentAsString(), Route.class);
         assertNotNull(savedRoute.id());
         assertNotNull(savedRoute.name());
