@@ -3,6 +3,8 @@ package com.github.fabianmariuslink.vite.route;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/routes")
 @RequiredArgsConstructor
@@ -13,5 +15,10 @@ public class RouteController {
     @PostMapping
     public Route addRoute(@RequestBody RouteDTO routeDetails) {
         return routeService.addRoute(routeDetails);
+    }
+
+    @GetMapping
+    public List<Route> getAllRoutes() {
+        return routeService.getAllRoutes();
     }
 }
