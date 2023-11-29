@@ -63,7 +63,7 @@ class RouteControllerTest {
 
     @Test
     @DirtiesContext
-    void getAllRoutes_whenNoEntries_thenGetStatus200AndReturnEmptyList() throws Exception {
+    void getAllRoutes_whenNoEntriesExist_thenGetStatus200AndReturnEmptyList() throws Exception {
         // WHEN AND THEN
         mockMvc.perform(get(BASE_URI))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ class RouteControllerTest {
 
     @Test
     @DirtiesContext
-    void getAllRoutes_whenEntriesExist_thenGetStatus200AndReturnAllEntries() throws Exception {
+    void getAllRoutes_whenEntriesExist_thenGetStatus200AndReturnListOfAllRoutes() throws Exception {
         // GIVEN
         RouteDTO routeDTO1 = RouteDTO.builder()
                 .name("SampleNameRoute")
@@ -111,10 +111,10 @@ class RouteControllerTest {
         Route savedRoute2 = objectMapper.readValue(result2.getResponse().getContentAsString(), Route.class);
 
         List<Route> routes = List.of(savedRoute1, savedRoute2);
-        String todosAsJson = objectMapper.writeValueAsString(routes);
+        String routesAsJson = objectMapper.writeValueAsString(routes);
         // THEN
         mockMvc.perform(get(BASE_URI))
                 .andExpect(status().isOk())
-                .andExpect(content().json(todosAsJson));
+                .andExpect(content().json(routesAsJson));
     }
 }

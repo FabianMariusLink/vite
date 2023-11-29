@@ -44,7 +44,7 @@ class RouteServiceTest {
     }
 
     @Test
-    void getAllRoutes_whenNoEntries_thenReturnEmptyList() {
+    void getAllRoutes_whenNoEntriesExist_thenReturnEmptyList() {
         // GIVEN
         List<Route> expected = List.of();
         // WHEN

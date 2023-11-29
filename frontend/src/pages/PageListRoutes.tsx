@@ -34,7 +34,7 @@ export default function PageListRoutes() {
         <>
             <Header/>
             {
-                routes.map(route => <ListItem route={route}/>)
+                routes.map(route => <ListItem route={route} key={route.id}/>)
             }
         </>
     );

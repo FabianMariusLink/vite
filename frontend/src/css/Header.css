@@ -6,7 +6,7 @@
 
 .header-container h2 {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 2.2em;
+    font-size: 2.4em;
     color: #98c5ed;
 }
 
@@ -30,6 +30,6 @@
 .navigation a {
     font-size: 1em;
     margin-right: 10px;
-    color: #373D42;
+    color: #98c5ed;
     text-decoration: none;
 }
