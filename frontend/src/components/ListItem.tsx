@@ -15,7 +15,7 @@ type RouteProps = {
     route: Route,
 }
 
-export default function ListItem(routeProps: RouteProps) {
+export default function ListItem(routeProps: Readonly<RouteProps>) {
 
     function truncateText(text: string, maxLength: number) {
         const words = text.split(' ');
