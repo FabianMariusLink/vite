@@ -3,6 +3,8 @@ package com.github.fabianmariuslink.vite.route;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RouteService {
@@ -18,5 +20,9 @@ public class RouteService {
                 .author(routeDetails.author())
                 .description(routeDetails.description())
                 .build());
+    }
+
+    public List<Route> getAllRoutes() {
+        return routeRepository.findAll();
     }
 }

@@ -7,13 +7,13 @@ export default function Header() {
     return (
         <>
             <div className="header-container">
-                <img src="/src/pictures/vite-logo.png" alt="kant"/>
+                <img src="/src/pictures/vite-logo.png" alt="vite-logo"/>
                 <h2>Vite</h2>
             </div>
             <hr className="underline"/>
             <div className={"navigation"}>
                 <Link to="/">Liste</Link>
-                <Link to="/PageAddRoute">Strecke anlegen</Link>
+                <Link to="/add-route">Strecke anlegen</Link>
             </div>
         </>
     );
