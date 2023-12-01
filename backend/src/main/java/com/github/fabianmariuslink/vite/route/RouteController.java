@@ -21,4 +21,9 @@ public class RouteController {
     public List<Route> getAllRoutes() {
         return routeService.getAllRoutes();
     }
+
+    @GetMapping("/{id}")
+    public Route getRouteById(@PathVariable String id) {
+        return routeService.getRouteById(id);
+    }
 }

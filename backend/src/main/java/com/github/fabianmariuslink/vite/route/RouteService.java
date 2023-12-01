@@ -1,5 +1,6 @@
 package com.github.fabianmariuslink.vite.route;
 
+import com.github.fabianmariuslink.vite.exception.RouteNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,9 @@ public class RouteService {
 
     public List<Route> getAllRoutes() {
         return routeRepository.findAll();
+    }
+
+    public Route getRouteById(String id) {
+        return routeRepository.findById(id).orElseThrow(() -> new RouteNotFoundException("Route not found!"));
     }
 }

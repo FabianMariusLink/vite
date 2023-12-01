@@ -1,14 +1,9 @@
 import Header from "../components/Header.tsx";
 import '../index.css';
 import React, {useEffect, useState} from "react";
-import {
-    APIProvider,
-    Map,
-    AdvancedMarker,
-    Pin,
-    InfoWindow,
-} from "@vis.gl/react-google-maps";
 import axios from "axios";
+import MapWindow from "../components/MapWindow.tsx";
+import viteSave from "../pictures/vite-save.png";
 
 type NewRoute = {
     name: string,
@@ -23,7 +18,6 @@ export default function PageAddRoute() {
 
     const [loading, setLoading] = useState(true);
     const [userLocation, setUserLocation] = useState({lat: 0, lng: 0});
-    const [open, setOpen] = useState(false);
     const [valueTitle, setValueTitle] = useState('');
     const [valueTitleValid, setValueTitleValid] = useState(true);
     const [valueAuthor, setValueAuthor] = useState('');
@@ -68,7 +62,10 @@ export default function PageAddRoute() {
                     setUserLocation({lat: latitude, lng: longitude});
 
                     const today = new Date();
-                    const formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+                    const day = today.getDate();
+                    const month = today.getMonth() + 1;
+                    const formatNumber = (number: number) => (number < 10 ? `0${number}` : number);
+                    const formattedDate = `${today.getFullYear()}-${formatNumber(month)}-${formatNumber(day)}`;
                     setCurrentDate(formattedDate);
 
                     setLoading(false);
@@ -85,35 +82,7 @@ export default function PageAddRoute() {
         <>
             <Header/>
             <div className={"content-container"}>
-                <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-                    <div className={"map-container"}>
-                        {loading ? (
-                            <h2 id="loading-text">Map is loading ...</h2>
-                        ) : (
-                            <Map zoom={19}
-                                 center={userLocation}
-                                 mapId={"8a28e823bfef5b48"}
-                            >
-                                <AdvancedMarker
-                                    position={userLocation}
-                                    onClick={() => setOpen(true)}
-                                >
-                                    <Pin
-                                        background={"#98c5ed"}
-                                        borderColor={"white"}
-                                        glyphColor={"white"}/>
-                                </AdvancedMarker>
-                                {open && (
-                                    <InfoWindow
-                                        position={userLocation}
-                                        onCloseClick={() => setOpen(false)}>
-                                        <p>I am here :-)</p>
-                                    </InfoWindow>
-                                )}
-                            </Map>
-                        )}
-                    </div>
-                </APIProvider>
+                <MapWindow coordinates={userLocation} loading={loading}/>
                 <form onSubmit={handleSubmit} className={"form-container"}>
                     <label>Streckentitel:
                         <br/>
@@ -152,7 +121,9 @@ export default function PageAddRoute() {
                         {!valueDescriptionValid ?
                             <span style={{color: 'red'}}>Bitte Beschreibung eintragen!</span> : null}
                     </label>
-                    <button>Speichern</button>
+                    <button className="icon-button">
+                        <img src={viteSave} alt="icon" className="icon-image"/>
+                    </button>
                 </form>
             </div>
         </>
