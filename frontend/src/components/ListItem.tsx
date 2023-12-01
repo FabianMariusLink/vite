@@ -1,5 +1,7 @@
 import '../css/ListItem.css';
 import {Link} from "react-router-dom";
+import vitePinList from '../pictures/vite-pin-list.png';
+import viteDetails from "../pictures/vite-world.png";
 
 type Route = {
     id: string,
@@ -28,7 +30,7 @@ export default function ListItem(routeProps: Readonly<RouteProps>) {
     return (
         <div className="list-item">
             <div className="left">
-                <img src="/src/pictures/vite-logo-list-item.png" alt="vite-logo-list-item"/>
+                <img src={vitePinList} alt="vite-pin-list"/>
             </div>
             <div className="center">
                 <p className="date-author">{routeProps.route.date} {routeProps.route.author}</p>
@@ -36,8 +38,8 @@ export default function ListItem(routeProps: Readonly<RouteProps>) {
                 <p className="description">{truncateText(routeProps.route.description, 4)}</p>
             </div>
             <div className="right">
-                <Link to={`/details-route/${routeProps.route.id}/details`}>
-                    <img src="/src/pictures/vite-welt-01.png" alt="vite-welt"/>
+                <Link to={`/details-route/${routeProps.route.id}`}>
+                    <img src={viteDetails} alt="vite-details"/>
                 </Link>
             </div>
         </div>

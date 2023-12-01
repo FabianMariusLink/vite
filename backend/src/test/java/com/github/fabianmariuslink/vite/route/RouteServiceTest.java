@@ -1,9 +1,11 @@
 package com.github.fabianmariuslink.vite.route;
 
+import com.github.fabianmariuslink.vite.exception.RouteNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -83,5 +85,31 @@ class RouteServiceTest {
         // THEN
         verify(routeRepository).findAll();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getRouteById_whenIdIsValid_thenReturnRoute() {
+        // GIVEN
+        Route expected = Route.builder()
+                .id("655c6a9c9108d659e2770dd2")
+                .name("SampleNameRoute1")
+                .lat(47.99288610012664)
+                .lng(8.56433932879702)
+                .date(LocalDate.parse("2023-11-20"))
+                .author("Fabian")
+                .description("A short text for example.")
+                .build();
+        // WHEN
+        when(routeRepository.findById(expected.id())).thenReturn(Optional.of(expected));
+        Route actual = routeService.getRouteById(expected.id());
+        // THEN
+        verify(routeRepository).findById(expected.id());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getRouteById_whenIdIsNotValid_thenThrowException() {
+        assertThrows(RouteNotFoundException.class, () -> routeService.getRouteById("Route not found!"));
+        verify(routeRepository).findById("Route not found!");
     }
 }

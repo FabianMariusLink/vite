@@ -117,4 +117,39 @@ class RouteControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(routesAsJson));
     }
+
+    @Test
+    @DirtiesContext
+    void getRouteById_whenIdIsValid_thenGetStatus200AndReturnRoute() throws Exception {
+        RouteDTO routeDTO = RouteDTO.builder()
+                .name("SampleNameRoute")
+                .lat(47.99288610012664)
+                .lng(8.56433932879702)
+                .date(LocalDate.parse("2023-11-20"))
+                .author("Fabian")
+                .description("A short text for example.")
+                .build();
+        String routeAsJson = objectMapper.writeValueAsString(routeDTO);
+
+        MvcResult result = mockMvc.perform(post(BASE_URI)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(routeAsJson)
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Route savedRoute = objectMapper.readValue(result.getResponse().getContentAsString(), Route.class);
+        String savedRouteAsJson = objectMapper.writeValueAsString(savedRoute);
+
+        mockMvc.perform(get(BASE_URI + "/" + savedRoute.id()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(savedRouteAsJson));
+    }
+
+    @Test
+    void getRouteById_whenIdIsNotValid_thenGetStatus404AndThrowException() throws Exception {
+        mockMvc.perform(get(BASE_URI + "/invalidId"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("Route not found!"));
+    }
 }
