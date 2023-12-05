@@ -17,8 +17,8 @@ export default function MapWindow(mapProps: Readonly<MapProps>) {
     const [open, setOpen] = useState<boolean>(false);
 
     return (
-        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <div className={"map-container"}>
+        <div className={"map-container"}>
+            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
                 {mapProps.loading ? (
                     <h2 id="loading-text">Map is loading ...</h2>
                 ) : (
@@ -44,7 +44,7 @@ export default function MapWindow(mapProps: Readonly<MapProps>) {
                         )}
                     </Map>
                 )}
-            </div>
-        </APIProvider>
+            </APIProvider>
+        </div>
     );
 }

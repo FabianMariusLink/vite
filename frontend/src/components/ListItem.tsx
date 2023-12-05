@@ -1,23 +1,14 @@
-import '../css/ListItem.css';
+import {Run} from '../Types.ts';
+import '../index.css';
 import {Link} from "react-router-dom";
 import vitePinList from '../pictures/vite-pin-list.png';
-import viteDetails from "../pictures/vite-world.png";
+import viteMapList from "../pictures/vite-map.png";
 
-type Route = {
-    id: string,
-    name: string,
-    lat: number,
-    lng: number,
-    date: string,
-    author: string,
-    description: string,
+type RunProps = {
+    run: Run,
 }
 
-type RouteProps = {
-    route: Route,
-}
-
-export default function ListItem(routeProps: Readonly<RouteProps>) {
+export default function ListItem(runProps: Readonly<RunProps>) {
 
     function truncateText(text: string, maxLength: number) {
         const words = text.split(' ');
@@ -33,13 +24,13 @@ export default function ListItem(routeProps: Readonly<RouteProps>) {
                 <img src={vitePinList} alt="vite-pin-list"/>
             </div>
             <div className="center">
-                <p className="date-author">{routeProps.route.date} {routeProps.route.author}</p>
-                <p className="name">{routeProps.route.name}</p>
-                <p className="description">{truncateText(routeProps.route.description, 4)}</p>
+                <p className="date-author">{runProps.run.date} {runProps.run.author}</p>
+                <p className="name">{runProps.run.name}</p>
+                <p className="description">{truncateText(runProps.run.description, 4)}</p>
             </div>
             <div className="right">
-                <Link to={`/details-route/${routeProps.route.id}`}>
-                    <img src={viteDetails} alt="vite-details"/>
+                <Link to={`/details-run/${runProps.run.id}`}>
+                    <img src={viteMapList} alt="vite-details"/>
                 </Link>
             </div>
         </div>
