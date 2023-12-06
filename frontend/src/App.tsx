@@ -26,7 +26,7 @@ function App() {
     useEffect(fetchListRuns, [])
 
     if (!runs) {
-        return "List is loading ..."
+        return "Liste wird geladen ..."
     }
 
     return (

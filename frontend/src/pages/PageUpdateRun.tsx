@@ -5,7 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import viteLocation from "../pictures/vite-pin.png";
-import viteSave from "../pictures/vite-save.png";
+import Form from "../components/Form.tsx";
 
 type UpdateRunsProps = {
     onListRunsChange: () => void
@@ -15,19 +15,14 @@ export default function PageUpdateRun(updateRunsProps: Readonly<UpdateRunsProps>
 
     const [userLocation, setUserLocation] = useState({lat: 0, lng: 0});
     const [valueTitle, setValueTitle] = useState('');
-    const [valueTitleValid, setValueTitleValid] = useState(true);
     const [valueAuthor, setValueAuthor] = useState('');
-    const [valueAuthorValid, setValueAuthorValid] = useState(true);
     const [valueDescription, setValueDescription] = useState('');
-    const [valueDescriptionValid, setValueDescriptionValid] = useState(true);
-
     const [data, setData] = useState<Run>({id: '', name: '', lat: 0, lng: 0, date: '', author: '', description: ''});
     const [loading, setLoading] = useState<boolean>(true);
-    const params = useParams();
-
-    const navigate = useNavigate();
-
     const [showPopup, setShowPopup] = useState(false);
+
+    const params = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`/api/routes/${params.id}`)
@@ -71,16 +66,16 @@ export default function PageUpdateRun(updateRunsProps: Readonly<UpdateRunsProps>
         });
     };
 
-    const handleSubmitUpdate = () => {
+    const handleUpdateRun = (title: string, author: string, description: string) => {
         axios.put(`/api/routes/${data.id}`, {
-            name: valueTitle,
+            name: title,
             lat: userLocation.lat,
             lng: userLocation.lng,
             date: data.date,
-            author: valueAuthor,
-            description: valueDescription,
+            author: author,
+            description: description,
         } as NewRun)
-            .then(updateRunsProps.onListRunsChange)
+            .then(updateRunsProps.onListRunsChange);
 
         navigate('/details-run/' + data.id);
     }
@@ -89,54 +84,12 @@ export default function PageUpdateRun(updateRunsProps: Readonly<UpdateRunsProps>
         <div className="display">
             <Header/>
             <MapWindow coordinates={userLocation} loading={loading}/>
+            <button className="icon-button" onClick={handleUserLocation}>
+                <img className="icon-image" src={viteLocation} alt="icon"/>
+            </button>
             <div className={"content-container"}>
-                <form className={"form-container"}>
-                    <label>Streckentitel:
-                        <br/>
-                        <input
-                            type="text"
-                            value={valueTitle}
-                            onChange={event => {
-                                setValueTitleValid(true);
-                                setValueTitle(event.target.value)
-                            }}
-                        />
-                        {!valueTitleValid ? <span style={{color: 'red'}}>Bitte Titel eintragen!</span> : null}
-                    </label>
-                    <label>Author:
-                        <br/>
-                        <input
-                            type="text"
-                            value={valueAuthor}
-                            onChange={event => {
-                                setValueAuthor(event.target.value)
-                                setValueAuthorValid(true);
-                            }}
-                        />
-                        {!valueAuthorValid ? <span style={{color: 'red'}}>Bitte Author eintragen!</span> : null}
-                    </label>
-                    <label>
-                        Beschreibung:
-                        <br/>
-                        <textarea
-                            value={valueDescription}
-                            onChange={event => {
-                                setValueDescription(event.target.value)
-                                setValueDescriptionValid(true);
-                            }}
-                        />
-                        {!valueDescriptionValid ?
-                            <span style={{color: 'red'}}>Bitte Beschreibung eintragen!</span> : null}
-                    </label>
-                </form>
-                <div className="round-buttons">
-                    <button className="icon-button" onClick={handleUserLocation}>
-                        <img className="icon-image" src={viteLocation} alt="icon"/>
-                    </button>
-                    <button className="icon-button" onClick={handleSubmitUpdate}>
-                        <img className="icon-image" src={viteSave} alt="icon"/>
-                    </button>
-                </div>
+                <Form title={valueTitle} author={valueAuthor} description={valueDescription}
+                      onSaveFormEntries={handleUpdateRun}/>
                 {showPopup && (
                     <div className="popup">
                         <p>Dein Standort wird erfasst ...</p>
