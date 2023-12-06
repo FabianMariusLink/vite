@@ -14,7 +14,7 @@ type AddRunProps = {
 export default function PageAddRun(addRunProps: Readonly<AddRunProps>) {
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [userLocation, setUserLocation] = useState<{lat: number, lng: number}>({lat: 0, lng: 0});
+    const [userLocation, setUserLocation] = useState<{ lat: number, lng: number }>({lat: 0, lng: 0});
     const [valueTitle, setValueTitle] = useState<string>('');
     const [valueTitleValid, setValueTitleValid] = useState<boolean>(true);
     const [valueAuthor, setValueAuthor] = useState<string>('');
@@ -79,55 +79,53 @@ export default function PageAddRun(addRunProps: Readonly<AddRunProps>) {
     }, []);
 
     return (
-        <>
-            <div className="display">
-                <Header/>
-                <MapWindow coordinates={userLocation} loading={loading}/>
-                <div className={"content-container"}>
-                    <form onSubmit={handleSubmitNewRun} className={"form-container"}>
-                        <label>Streckentitel:
-                            <br/>
-                            <input
-                                type="text"
-                                value={valueTitle}
-                                onChange={event => {
-                                    setValueTitleValid(true);
-                                    setValueTitle(event.target.value)
-                                }}
-                            />
-                            {!valueTitleValid ? <span style={{color: 'red'}}>Bitte Titel eintragen!</span> : null}
-                        </label>
-                        <label>Author:
-                            <br/>
-                            <input
-                                type="text"
-                                value={valueAuthor}
-                                onChange={event => {
-                                    setValueAuthor(event.target.value)
-                                    setValueAuthorValid(true);
-                                }}
-                            />
-                            {!valueAuthorValid ? <span style={{color: 'red'}}>Bitte Author eintragen!</span> : null}
-                        </label>
-                        <label>
-                            Beschreibung:
-                            <br/>
-                            <textarea
-                                value={valueDescription}
-                                onChange={event => {
-                                    setValueDescription(event.target.value)
-                                    setValueDescriptionValid(true);
-                                }}
-                            />
-                            {!valueDescriptionValid ?
-                                <span style={{color: 'red'}}>Bitte Beschreibung eintragen!</span> : null}
-                        </label>
-                        <button className="icon-button">
-                            <img src={viteSave} alt="icon" className="icon-image"/>
-                        </button>
-                    </form>
-                </div>
+        <div className="display">
+            <Header/>
+            <MapWindow coordinates={userLocation} loading={loading}/>
+            <div className={"content-container"}>
+                <form onSubmit={handleSubmitNewRun} className={"form-container"}>
+                    <label>Streckentitel:
+                        <br/>
+                        <input
+                            type="text"
+                            value={valueTitle}
+                            onChange={event => {
+                                setValueTitleValid(true);
+                                setValueTitle(event.target.value)
+                            }}
+                        />
+                        {!valueTitleValid ? <span style={{color: 'red'}}>Bitte Titel eintragen!</span> : null}
+                    </label>
+                    <label>Author:
+                        <br/>
+                        <input
+                            type="text"
+                            value={valueAuthor}
+                            onChange={event => {
+                                setValueAuthor(event.target.value)
+                                setValueAuthorValid(true);
+                            }}
+                        />
+                        {!valueAuthorValid ? <span style={{color: 'red'}}>Bitte Author eintragen!</span> : null}
+                    </label>
+                    <label>
+                        Beschreibung:
+                        <br/>
+                        <textarea
+                            value={valueDescription}
+                            onChange={event => {
+                                setValueDescription(event.target.value)
+                                setValueDescriptionValid(true);
+                            }}
+                        />
+                        {!valueDescriptionValid ?
+                            <span style={{color: 'red'}}>Bitte Beschreibung eintragen!</span> : null}
+                    </label>
+                    <button className="icon-button">
+                        <img src={viteSave} alt="icon" className="icon-image"/>
+                    </button>
+                </form>
             </div>
-        </>
+        </div>
     );
 }

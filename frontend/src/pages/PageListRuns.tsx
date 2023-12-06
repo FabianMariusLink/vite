@@ -9,15 +9,13 @@ type ListRunsProps = {
 export default function PageListRuns(listRunsProps: Readonly<ListRunsProps>) {
 
     return (
-        <>
-            <div className="display">
-                <Header/>
-                <div className={"content-container"}>
-                    {
-                        listRunsProps.runs.map(run => <ListItem run={run} key={run.id}/>)
-                    }
-                </div>
+        <div className="display">
+            <Header/>
+            <div className={"content-container"}>
+                {
+                    listRunsProps.runs.map(run => <ListItem run={run} key={run.id}/>)
+                }
             </div>
-        </>
+        </div>
     );
 }

@@ -53,40 +53,38 @@ export default function PageDetailsRun(detailsRunsProps: Readonly<DetailsRunsPro
     }
 
     return (
-        <>
-            <div className="display">
-                <Header/>
-                <MapWindow coordinates={{lat: data.lat, lng: data.lng}} loading={loading}/>
-                <div className={"content-container"}>
-                    <div className={"content-details"}>
-                        <p>Streckentitel:</p>
-                        <p className="details-background">{data.name}</p>
-                        <p>Erstellt am:</p>
-                        <p className="details-background">{data.date}</p>
-                        <p>Author:</p>
-                        <p className="details-background">{data.author}</p>
-                        <p>Beschreibung:</p>
-                        <p className="details-background">{data.description}</p>
-                        <div className="round-buttons">
-                            <button className="icon-button" onClick={updateRun}>
-                                <img src={viteEdit} alt="icon" className="icon-image"/>
-                            </button>
-                            <button className="icon-button" onClick={deleteRun}>
-                                <img src={viteDelete} alt="icon" className="icon-image"/>
-                            </button>
-                        </div>
+        <div className="display">
+            <Header/>
+            <MapWindow coordinates={{lat: data.lat, lng: data.lng}} loading={loading}/>
+            <div className={"content-container"}>
+                <div className={"content-details"}>
+                    <p>Streckentitel:</p>
+                    <p className="details-background">{data.name}</p>
+                    <p>Erstellt am:</p>
+                    <p className="details-background">{data.date}</p>
+                    <p>Author:</p>
+                    <p className="details-background">{data.author}</p>
+                    <p>Beschreibung:</p>
+                    <p className="details-background">{data.description}</p>
+                    <div className="round-buttons">
+                        <button className="icon-button" onClick={updateRun}>
+                            <img src={viteEdit} alt="icon" className="icon-image"/>
+                        </button>
+                        <button className="icon-button" onClick={deleteRun}>
+                            <img src={viteDelete} alt="icon" className="icon-image"/>
+                        </button>
                     </div>
                 </div>
-                {showPopup && (
-                    <div className="popup">
-                        <p>Strecke löschen?</p>
-                        <div className="popup-buttons">
-                            <button onClick={handleYesClick}>Ja</button>
-                            <button onClick={handleNoClick}>Nein</button>
-                        </div>
-                    </div>
-                )}
             </div>
-        </>
+            {showPopup && (
+                <div className="popup">
+                    <p>Strecke löschen?</p>
+                    <div className="popup-buttons">
+                        <button onClick={handleYesClick}>Ja</button>
+                        <button onClick={handleNoClick}>Nein</button>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }

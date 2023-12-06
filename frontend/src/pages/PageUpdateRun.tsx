@@ -86,65 +86,63 @@ export default function PageUpdateRun(updateRunsProps: Readonly<UpdateRunsProps>
     }
 
     return (
-        <>
-            <div className="display">
-                <Header/>
-                <MapWindow coordinates={userLocation} loading={loading}/>
-                <div className={"content-container"}>
-                    <form className={"form-container"}>
-                        <label>Streckentitel:
-                            <br/>
-                            <input
-                                type="text"
-                                value={valueTitle}
-                                onChange={event => {
-                                    setValueTitleValid(true);
-                                    setValueTitle(event.target.value)
-                                }}
-                            />
-                            {!valueTitleValid ? <span style={{color: 'red'}}>Bitte Titel eintragen!</span> : null}
-                        </label>
-                        <label>Author:
-                            <br/>
-                            <input
-                                type="text"
-                                value={valueAuthor}
-                                onChange={event => {
-                                    setValueAuthor(event.target.value)
-                                    setValueAuthorValid(true);
-                                }}
-                            />
-                            {!valueAuthorValid ? <span style={{color: 'red'}}>Bitte Author eintragen!</span> : null}
-                        </label>
-                        <label>
-                            Beschreibung:
-                            <br/>
-                            <textarea
-                                value={valueDescription}
-                                onChange={event => {
-                                    setValueDescription(event.target.value)
-                                    setValueDescriptionValid(true);
-                                }}
-                            />
-                            {!valueDescriptionValid ?
-                                <span style={{color: 'red'}}>Bitte Beschreibung eintragen!</span> : null}
-                        </label>
-                    </form>
-                    <div className="round-buttons">
-                        <button className="icon-button" onClick={handleUserLocation}>
-                            <img className="icon-image" src={viteLocation} alt="icon"/>
-                        </button>
-                        <button className="icon-button" onClick={handleSubmitUpdate}>
-                            <img className="icon-image" src={viteSave} alt="icon"/>
-                        </button>
-                    </div>
-                    {showPopup && (
-                        <div className="popup">
-                            <p>Dein Standort wird erfasst ...</p>
-                        </div>
-                    )}
+        <div className="display">
+            <Header/>
+            <MapWindow coordinates={userLocation} loading={loading}/>
+            <div className={"content-container"}>
+                <form className={"form-container"}>
+                    <label>Streckentitel:
+                        <br/>
+                        <input
+                            type="text"
+                            value={valueTitle}
+                            onChange={event => {
+                                setValueTitleValid(true);
+                                setValueTitle(event.target.value)
+                            }}
+                        />
+                        {!valueTitleValid ? <span style={{color: 'red'}}>Bitte Titel eintragen!</span> : null}
+                    </label>
+                    <label>Author:
+                        <br/>
+                        <input
+                            type="text"
+                            value={valueAuthor}
+                            onChange={event => {
+                                setValueAuthor(event.target.value)
+                                setValueAuthorValid(true);
+                            }}
+                        />
+                        {!valueAuthorValid ? <span style={{color: 'red'}}>Bitte Author eintragen!</span> : null}
+                    </label>
+                    <label>
+                        Beschreibung:
+                        <br/>
+                        <textarea
+                            value={valueDescription}
+                            onChange={event => {
+                                setValueDescription(event.target.value)
+                                setValueDescriptionValid(true);
+                            }}
+                        />
+                        {!valueDescriptionValid ?
+                            <span style={{color: 'red'}}>Bitte Beschreibung eintragen!</span> : null}
+                    </label>
+                </form>
+                <div className="round-buttons">
+                    <button className="icon-button" onClick={handleUserLocation}>
+                        <img className="icon-image" src={viteLocation} alt="icon"/>
+                    </button>
+                    <button className="icon-button" onClick={handleSubmitUpdate}>
+                        <img className="icon-image" src={viteSave} alt="icon"/>
+                    </button>
                 </div>
+                {showPopup && (
+                    <div className="popup">
+                        <p>Dein Standort wird erfasst ...</p>
+                    </div>
+                )}
             </div>
-        </>
+        </div>
     );
 }
