@@ -8,7 +8,7 @@ type FormProps = {
     onSaveFormEntries: (title: string, author: string, description: string) => void
 }
 
-export default function Form(formProps: FormProps) {
+export default function Form(formProps: Readonly<FormProps>) {
 
     const [valueTitle, setValueTitle] = useState<string>('');
     const [valueTitleValid, setValueTitleValid] = useState<boolean>(true);
