@@ -30,4 +30,20 @@ public class RouteService {
     public Route getRouteById(String id) {
         return routeRepository.findById(id).orElseThrow(() -> new RouteNotFoundException("Route not found!"));
     }
+
+    public void deleteRouteById(String id) {
+        routeRepository.deleteById(id);
+    }
+
+    public Route updateRoute(String id, RouteDTO routeDetails) {
+        return routeRepository.save(Route.builder()
+                .id(id)
+                .name(routeDetails.name())
+                .lat(routeDetails.lat())
+                .lng(routeDetails.lng())
+                .date(routeDetails.date())
+                .author(routeDetails.author())
+                .description(routeDetails.description())
+                .build());
+    }
 }

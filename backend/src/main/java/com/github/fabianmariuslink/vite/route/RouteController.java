@@ -26,4 +26,14 @@ public class RouteController {
     public Route getRouteById(@PathVariable String id) {
         return routeService.getRouteById(id);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteRouteById(@PathVariable String id) {
+        routeService.deleteRouteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Route updateRoute(@PathVariable String id, @RequestBody RouteDTO routeDetails) {
+        return routeService.updateRoute(id, routeDetails);
+    }
 }
