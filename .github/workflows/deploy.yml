@@ -84,6 +84,8 @@ jobs:
       name: vite
       url: https://vite-isos.onrender.com
     steps:
+      - name: Set Google Maps API Key
+        run: echo "VITE_GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" >> .env
       - name: Trigger Render.com Deployment
         run: |
           curl -X POST ${{ secrets.RENDER_DEPLOY }}
