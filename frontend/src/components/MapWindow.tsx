@@ -18,7 +18,7 @@ export default function MapWindow(mapProps: Readonly<MapProps>) {
 
     return (
         <div className={"map-container"}>
-            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+            <APIProvider apiKey={process.env.VITE_GOOGLE_MAPS_API_KEY}>
                 {mapProps.loading ? (
                     <h2 id="loading-text">Karte wird geladen ...</h2>
                 ) : (
