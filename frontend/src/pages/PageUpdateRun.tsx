@@ -76,8 +76,8 @@ export default function PageUpdateRun(updateRunsProps: Readonly<UpdateRunsProps>
             description: description,
         } as NewRun)
             .then(updateRunsProps.onListRunsChange);
-
-        navigate('/details-run/' + data.id);
+        //navigate('/details-run/' + data.id);
+        navigate('/');
     }
 
     return (
