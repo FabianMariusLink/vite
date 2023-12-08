@@ -6,6 +6,7 @@ import {
     InfoWindow,
 } from "@vis.gl/react-google-maps";
 import {useState} from "react";
+import 'dotenv/config.d.ts'
 
 type MapProps = {
     coordinates: { lat: number; lng: number };
