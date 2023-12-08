@@ -31,3 +31,4 @@
 /frontend/dist-ssr
 /frontend/*.local
 /frontend/.env
+/backend/src/main/resources/static/
