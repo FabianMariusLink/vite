@@ -5,8 +5,8 @@ import {
     Pin,
     InfoWindow,
 } from "@vis.gl/react-google-maps";
-import {useState} from "react";
-import 'dotenv/config.d.ts'
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 type MapProps = {
     coordinates: { lat: number; lng: number };
@@ -17,8 +17,19 @@ export default function MapWindow(mapProps: Readonly<MapProps>) {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY;
-    if(!apiKey) return ""
+    const[apiKey, setApiKey] = useState<string | undefined>(undefined)
+
+    function fetchApiKey() {
+        axios.get("/api/settings")
+            .then(r => setApiKey(r.data))
+            .catch (e => console.log(e))
+    }
+
+    useEffect(() => {
+        fetchApiKey();
+    }, []);
+
+    if(!apiKey) return <p>Loading ... </p>
 
     return (
         <div className={"map-container"}>
