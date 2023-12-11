@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@next/env": "^14.0.3",
     "@react-google-maps/api": "^2.19.2",
     "@types/react-router-dom": "^5.3.3",
     "@vis.gl/react-google-maps": "^0.3.3",
